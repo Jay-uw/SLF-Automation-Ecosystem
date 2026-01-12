@@ -219,7 +219,9 @@
         <div class="container mx-auto px-6 text-center flex flex-col items-center">
             
             <!-- Footer Logo (Kept in white box for visibility against black background) -->
-           
+            <div>
+                <img src="LogoslfPNG.png" alt="SLF Logo" class="h-10 w-auto">
+            </div>
 
             <p class="mb-2 font-bold text-white text-lg font-serif tracking-wide">SLF Automated Ticket Systems Documentation</p>
             <div class="h-1 w-16 bg-brand-red my-4 rounded"></div>
@@ -321,7 +323,10 @@
             { feature: 'Calendar View', d: true, f: true, s: true, c: false, r: false },
             { feature: 'Auto-Meeting Invites', d: false, f: false, s: true, c: false, r: false },
             { feature: 'Financial Sum Logic', d: false, f: false, s: false, c: false, r: true },
-            { feature: 'Priority Segmentation', d: true, f: true, s: false, c: true, r: false }
+            { feature: 'Priority Segmentation', d: true, f: true, s: false, c: true, r: false },
+            // ADDED: Daily and Weekly Reports as separate rows to show full coverage
+            { feature: 'Daily Reports', d: true, f: true, s: true, c: true, r: true },
+            { feature: 'Weekly Reports', d: true, f: true, s: true, c: true, r: true }
         ];
 
         // --- STATE MANAGEMENT ---
