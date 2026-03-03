@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SLF Operational Automation Hub</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Three.js (For 3D Effects) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -111,15 +107,12 @@
 </head>
 <body class="bg-brand-base text-brand-dark font-sans leading-relaxed flex flex-col min-h-screen relative">
 
-    <!-- 3D Background Container -->
     <div id="canvas-container"></div>
 
-    <!-- Navigation / Header (White Background for Logo Transparency) -->
     <header class="bg-white/95 backdrop-blur-md text-gray-800 shadow-md sticky top-0 z-50 border-b border-gray-100">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <!-- Logo Image (Transparent Background) -->
-                <img src="LogoslfPNG.png" alt="SLF Logo" class="h-12 w-auto object-contain">
+                <img src="LogoslfPNG.png" alt="SLF Logo" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50/1E1E1E/B81D1D?text=SOLANO+LAW+FIRM';">
                 
                 <div class="border-l border-gray-300 pl-4">
                     <h1 class="text-xl font-serif font-bold tracking-wide leading-tight text-brand-red">SLF Automation Ecosystem</h1>
@@ -134,10 +127,8 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="container mx-auto px-4 py-12 space-y-20 flex-grow z-10">
 
-        <!-- 1. Ecosystem Overview Section -->
         <section id="overview" class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-serif font-bold text-brand-red mb-6">Centralized Workflow Architecture</h2>
@@ -147,21 +138,17 @@
                 </p>
             </div>
 
-            <!-- Architecture Flow Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
-                <!-- Connector Line for Desktop -->
                 <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-400 -z-10 transform -translate-y-1/2"></div>
 
-                <!-- Input -->
                 <div class="glass-panel p-8 rounded-xl shadow-lg border-t-4 border-brand-red flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="bg-red-50 p-5 rounded-full mb-6 text-brand-red shadow-sm">
                         <i class="fa-brands fa-microsoft text-4xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3 text-gray-800">1. Input Source</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">Microsoft Teams Channels (Deadlines, Filings, Bugs, etc.) act as the primary intake method.</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">Microsoft Teams Channels (Deadlines, Filings, Issues, etc.) act as the primary intake method.</p>
                 </div>
 
-                <!-- Process -->
                 <div class="glass-panel p-8 rounded-xl shadow-lg border-t-4 border-brand-gold flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="bg-yellow-50 p-5 rounded-full mb-6 text-yellow-700 shadow-sm">
                         <i class="fa-solid fa-gears text-4xl"></i>
@@ -170,7 +157,6 @@
                     <p class="text-sm text-gray-600 leading-relaxed">Power Automate extracts files, dates, and context. Logic runs for parsing and notifications.</p>
                 </div>
 
-                <!-- Storage -->
                 <div class="glass-panel p-8 rounded-xl shadow-lg border-t-4 border-green-600 flex flex-col items-center text-center transform hover:-translate-y-2 transition-transform duration-300">
                     <div class="bg-green-50 p-5 rounded-full mb-6 text-green-700 shadow-sm">
                         <i class="fa-solid fa-database text-4xl"></i>
@@ -181,25 +167,19 @@
             </div>
         </section>
 
-        <!-- 2. Systems Explorer (Interactive Tabs) -->
         <section id="systems" class="max-w-6xl mx-auto glass-panel rounded-2xl shadow-xl overflow-hidden border border-gray-100">
             <div class="p-8 border-b border-gray-100 bg-gray-50/50">
                 <h2 class="text-2xl font-serif font-bold text-brand-red">Systems Explorer</h2>
                 <p class="text-gray-500 text-sm mt-2">Select a system below to view its workflow logic, visualization methods, and access links.</p>
             </div>
 
-            <!-- Tab Navigation -->
             <div class="flex overflow-x-auto bg-white/50 border-b border-gray-200 scrollbar-hide" id="systemTabs">
-                <!-- JS will populate tabs -->
-            </div>
+                </div>
 
-            <!-- Tab Content Area -->
             <div class="p-6 md:p-12 min-h-[500px]" id="tabContent">
-                <!-- JS will inject content here -->
-            </div>
+                </div>
         </section>
 
-        <!-- 3. Feature Comparison Matrix -->
         <section id="matrix" class="max-w-6xl mx-auto">
             <div class="mb-8 text-center md:text-left glass-panel p-4 rounded-lg inline-block shadow-md">
                 <h2 class="text-2xl font-serif font-bold text-brand-red mb-2">Ecosystem Capabilities Matrix</h2>
@@ -207,7 +187,6 @@
             </div>
             
             <div class="glass-panel rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                <!-- Filter Controls -->
                 <div class="p-4 bg-gray-900 text-white flex flex-wrap gap-3 items-center text-xs md:text-sm">
                     <span class="font-bold text-brand-gold mr-2 text-sm"><i class="fa-solid fa-filter mr-2"></i>Highlight:</span>
                     
@@ -234,12 +213,11 @@
                                 <th class="p-5 border-b border-gray-200 text-center w-32 min-w-[120px]">Scheduling</th>
                                 <th class="p-5 border-b border-gray-200 text-center w-32 min-w-[120px]">Complaints</th>
                                 <th class="p-5 border-b border-gray-200 text-center w-32 min-w-[120px]">Refunds</th>
-                                <th class="p-5 border-b border-gray-200 text-center w-32 min-w-[120px]">HubSpot Bugs</th>
+                                <th class="p-5 border-b border-gray-200 text-center w-32 min-w-[120px]">IT Issues</th>
                             </tr>
                         </thead>
                         <tbody id="matrixBody" class="text-sm text-gray-700 divide-y divide-gray-100">
-                            <!-- JS populates rows -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -247,13 +225,11 @@
 
     </main>
 
-    <!-- Footer (Black Column) -->
     <footer class="bg-neutral-900 text-gray-400 py-16 border-t border-gray-800 z-10 relative">
         <div class="container mx-auto px-6 text-center flex flex-col items-center">
             
-            <!-- Footer Logo (Kept in white box for visibility against black background) -->
             <div class="bg-white p-3 rounded-lg mb-6 shadow-glow">
-                <img src="LogoslfPNG.png" alt="SLF Logo" class="h-10 w-auto">
+                <img src="LogoslfPNG.png" alt="SLF Logo" class="h-10 w-auto" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50/1E1E1E/B81D1D?text=SOLANO+LAW+FIRM';">
             </div>
 
             <p class="mb-2 font-bold text-white text-lg font-serif tracking-wide">SLF Automated Ticket Systems Documentation</p>
@@ -268,7 +244,6 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
     <script>
         // --- DATA STORE ---
         const systems = [
@@ -358,25 +333,25 @@
                 }
             },
             {
-                id: 'hubspot',
-                name: 'HubSpot Bugs',
-                icon: 'fa-bug',
-                color: 'text-rose-600', // Unique color
-                listLink: 'https://slfo365.sharepoint.com/sites/SLF/Lists/HubSpot%20Issues%20Tracker/AllItems.aspx?env=WebViewList',
-                formLink: 'https://slfo365.sharepoint.com/:l:/s/SLF/JADhZuGi6nWMS4Kz2PNZwVOtAWEaqYTfZxC7OyH5gjSHE6Q?nav=MmU3MDIxM2YtYTAwYS00MzE3LWI2MjQtOTk1MGQ0ZTM1MDIx',
-                summary: 'Critical system to capture and track technical errors during the CRM migration from Law Hustle to HubSpot.',
+                id: 'itissues',
+                name: 'IT Issues',
+                icon: 'fa-laptop-code',
+                color: 'text-teal-600', // Changed color to differentiate from bugs
+                listLink: 'https://slfo365.sharepoint.com/sites/SLF/Lists/HubSpot%20Issues%20Tracker/AllItems.aspx?env=WebViewList', // Assuming you'll update this link eventually
+                formLink: 'https://slfo365.sharepoint.com/:l:/s/SLF/JADhZuGi6nWMS4Kz2PNZwVOtAWEaqYTfZxC7OyH5gjSHE6Q?nav=MmU3MDIxM2YtYTAwYS00MzE3LWI2MjQtOTk1MGQ0ZTM1MDIx', // Same here
+                summary: 'Critical system to capture, track, and resolve general IT issues, network problems, and software bugs across the firm.',
                 details: {
-                    input: 'Teams Channel: HubSpot Issues',
+                    input: 'Teams Channel: Operations Issues',
                     logic: 'Smart Text Parsing & Fault Tolerance',
                     reporting: 'Real-time Dashboard & Deep Links',
-                    vizType: 'flow_hubspot',
-                    vizTitle: 'Smart Parsing & Error Tracking',
-                    vizDesc: 'Robust extraction of Module, Priority, and Steps from unstructured Teams posts.'
+                    vizType: 'flow_itissues', // Updated viz type
+                    vizTitle: 'Smart Parsing & IT Issue Tracking',
+                    vizDesc: 'Robust extraction of Issue Type, Urgency, and Details from unstructured Teams posts.'
                 }
             }
         ];
 
-        // Added 'h' column for HubSpot
+        // Updated 'h' column to represent IT Issues
         const matrixData = [
             { feature: 'Teams to SharePoint Sync', d: true, f: true, s: true, c: true, r: true, h: true },
             { feature: 'Auto-Attachments', d: true, f: true, s: false, c: false, r: false, h: true },
@@ -385,7 +360,7 @@
             { feature: 'Auto-Meeting Invites', d: false, f: false, s: true, c: false, r: false, h: false },
             { feature: 'Financial Sum Logic', d: false, f: false, s: false, c: false, r: true, h: false },
             { feature: 'Priority Segmentation', d: true, f: true, s: false, c: true, r: false, h: true },
-            { feature: 'Smart Text Parsing', d: false, f: false, s: false, c: false, r: false, h: true }, // New feature row
+            { feature: 'Smart Text Parsing', d: false, f: false, s: false, c: false, r: false, h: true },
             { feature: 'Daily Reports', d: true, f: true, s: true, c: true, r: true, h: false },
             { feature: 'Weekly Reports', d: true, f: true, s: true, c: true, r: true, h: false }
         ];
@@ -398,7 +373,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderTabs();
             renderMatrix();
-            switchTab('hubspot'); // Default to new tab to show it off
+            switchTab('itissues'); // Default to the newly renamed tab
             init3DBackground();
         });
 
@@ -435,7 +410,6 @@
             const contentContainer = document.getElementById('tabContent');
             contentContainer.innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 fade-in">
-                    <!-- Text Content -->
                     <div class="space-y-6">
                         <div class="flex items-center gap-3 mb-2">
                             <div class="p-3 bg-gray-100 rounded-lg ${system.color}">
@@ -446,7 +420,6 @@
                         
                         <p class="text-lg text-gray-600 leading-relaxed">${system.summary}</p>
                         
-                        <!-- NEW: Dynamic Links Section -->
                         <div class="flex flex-col sm:flex-row gap-4 my-6">
                             <a href="${system.listLink}" target="_blank" class="flex-1 bg-brand-red hover:bg-red-800 text-white font-bold py-3 px-6 rounded-lg shadow transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-1">
                                 <i class="fa-solid fa-list-check"></i> Open Tracker List
@@ -490,12 +463,10 @@
                         </div>
                     </div>
 
-                    <!-- Visualization Area -->
                     <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 flex flex-col items-center justify-center min-h-[400px] shadow-inner">
                         <h4 class="text-sm font-bold text-gray-400 uppercase mb-6 tracking-wider w-full text-center">${system.details.vizTitle}</h4>
                         <div id="vizContainer" class="w-full flex justify-center items-center">
-                            <!-- Dynamic Content -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             `;
@@ -619,40 +590,37 @@
                         </div>
                     </div>
                 `;
-            } else if (system.details.vizType === 'flow_hubspot') {
-                // New HubSpot Flow
+            } else if (system.details.vizType === 'flow_itissues') {
+                // Updated IT Issues Flow Visual
                 container.innerHTML = `
                     <div class="flex flex-col items-center space-y-3 w-full max-w-md">
-                        <!-- Step 1 -->
-                        <div class="flex items-center justify-between w-full bg-white p-3 rounded shadow border-l-4 border-purple-500">
+                        <div class="flex items-center justify-between w-full bg-white p-3 rounded shadow border-l-4 border-teal-500">
                             <div class="flex items-center gap-2">
-                                <i class="fa-brands fa-microsoft text-purple-600 text-lg"></i>
-                                <span class="text-xs font-bold">Teams: "Bug: Contacts Module..."</span>
+                                <i class="fa-brands fa-microsoft text-teal-600 text-lg"></i>
+                                <span class="text-xs font-bold">Teams: "Issue: Printer offline..."</span>
                             </div>
                         </div>
                         
                         <i class="fa-solid fa-arrow-down text-gray-400 text-xs"></i>
 
-                        <!-- Step 2 -->
                         <div class="flex items-center justify-between w-full bg-white p-3 rounded shadow border-l-4 border-brand-gold animate-pulse">
                             <div class="flex items-center gap-2">
                                 <i class="fa-solid fa-robot text-brand-gold text-lg"></i>
                                 <div>
-                                    <span class="text-xs font-bold block">Smart Parsing split()</span>
-                                    <span class="text-[10px] text-gray-500">Extracts: Module, Priority, Steps</span>
+                                    <span class="text-xs font-bold block">Smart Parsing logic()</span>
+                                    <span class="text-[10px] text-gray-500">Extracts: Category, Urgency, Details</span>
                                 </div>
                             </div>
                         </div>
 
                         <i class="fa-solid fa-arrow-down text-gray-400 text-xs"></i>
 
-                        <!-- Step 3 -->
-                        <div class="flex items-center justify-between w-full bg-white p-3 rounded shadow border-l-4 border-rose-500">
+                        <div class="flex items-center justify-between w-full bg-white p-3 rounded shadow border-l-4 border-teal-600">
                             <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-ticket text-rose-500 text-lg"></i>
-                                <span class="text-xs font-bold">Ticket Created + Image Attached</span>
+                                <i class="fa-solid fa-ticket text-teal-600 text-lg"></i>
+                                <span class="text-xs font-bold">IT Ticket Created & Routed</span>
                             </div>
-                            <i class="fa-solid fa-paperclip text-gray-400"></i>
+                            <i class="fa-solid fa-server text-gray-400"></i>
                         </div>
                     </div>
                 `;
@@ -665,7 +633,6 @@
                             <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Time Blocks</span>
                         </div>
                         <div class="space-y-2 relative">
-                            <!-- Time Slots -->
                             <div class="grid grid-cols-4 gap-2 text-xs text-gray-400 mb-2">
                                 <div>9:00 AM</div>
                                 <div>10:00 AM</div>
@@ -673,14 +640,11 @@
                                 <div>12:00 PM</div>
                             </div>
                             
-                            <!-- Blocks -->
                             <div class="relative h-20 bg-gray-50 rounded border border-gray-100">
-                                <!-- Conflicting Block -->
                                 <div class="absolute top-2 left-[10%] w-[30%] h-12 bg-purple-200 border-l-4 border-purple-600 rounded text-xs p-1 text-purple-900 overflow-hidden shadow-sm hover:z-10 hover:scale-105 transition">
                                     <strong>Court Hearing</strong><br>9:15 - 10:30
                                 </div>
                                 
-                                <!-- Second Block -->
                                 <div class="absolute top-6 left-[60%] w-[20%] h-10 bg-blue-100 border-l-4 border-blue-600 rounded text-xs p-1 text-blue-900 overflow-hidden shadow-sm hover:z-10 hover:scale-105 transition">
                                     <strong>Client Mtg</strong><br>11:15 - 12:00
                                 </div>
@@ -737,7 +701,6 @@
             if (type === 'all') return;
 
             // Map filters to row indices
-            // 0: Sync, 1: Attach, 2: Links, 3: Calendar, 4: Invites, 5: Financial, 6: Priority, 7: Parsing, 8: Daily, 9: Weekly
             let indices = [];
             if (type === 'sync') indices = [0];
             if (type === 'attachments') indices = [1];
@@ -838,4 +801,3 @@
     </script>
 </body>
 </html>
-
