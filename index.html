@@ -50,6 +50,9 @@
             --tab-active-bg: rgba(220,38,38,0.06);
             --section-eye: #dc2626;
             --filter-label-c: #d97706;
+            --dev-bg: rgba(217,119,6,0.08);
+            --dev-bdr: rgba(217,119,6,0.5);
+            --dev-c: #fcd34d;
         }
         body.light {
             --bg:      #fafaf9;
@@ -85,6 +88,9 @@
             --tab-active-bg: #ffffff;
             --section-eye: #991b1b;
             --filter-label-c: #d97706;
+            --dev-bg: #fffbeb;
+            --dev-bdr: #d97706;
+            --dev-c: #92400e;
         }
         * { box-sizing: border-box; }
         body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--t1); margin:0; transition: background 0.3s, color 0.3s; }
@@ -132,31 +138,41 @@
         .explorer-header p  { font-size:0.78rem; color:var(--t3); margin:4px 0 0; font-family:'DM Mono',monospace; }
 
         /* TABS */
-        .tab-wrap { display:flex; align-items:stretch; background:var(--bg); border-bottom:1px solid var(--border); }
-        .tab-scroll-btn { flex-shrink:0; background:transparent; border:none; border-right:1px solid var(--border); width:36px; cursor:pointer; color:var(--t3); font-size:0.75rem; display:flex; align-items:center; justify-content:center; transition:color 0.2s; }
-        .tab-scroll-btn:last-child { border-right:none; border-left:1px solid var(--border); }
-        .tab-scroll-btn:hover { color:var(--gold); background:rgba(255,255,255,0.02); }
-        .tab-bar { display:flex; overflow-x:auto; flex:1; scrollbar-width:none; scroll-behavior:smooth; }
-        .tab-bar::-webkit-scrollbar { display:none; }
-        .tab-btn { flex-shrink:0; padding:13px 18px; font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:500; border:none; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:7px; transition:all 0.2s; background:transparent; border-bottom:2px solid transparent; color:var(--t2); }
+        .tab-nav-row { display:flex; align-items:stretch; background:var(--bg); border-bottom:1px solid var(--border); }
+        .nav-arrow { flex-shrink:0; width:40px; background:transparent; border:none; cursor:pointer; color:var(--t3); font-size:0.85rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+        .nav-arrow:first-child { border-right:1px solid var(--border); }
+        .nav-arrow:last-child { border-left:1px solid var(--border); }
+        .nav-arrow:hover { color:var(--gold); background:rgba(255,255,255,0.03); }
+        .tab-bar { display:flex; flex-wrap:wrap; flex:1; }
+        .tab-btn { flex-shrink:0; padding:13px 18px; font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:500; border:none; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:7px; transition:all 0.2s; background:transparent; border-bottom:2px solid var(--border); color:var(--t2); }
         .tab-btn:hover { color:var(--t1); background:rgba(255,255,255,0.02); }
         body.light .tab-btn:hover { background:#fef2f2; color:var(--red); }
-        .tab-btn.active { color:var(--red-light); background:var(--tab-active-bg); border-bottom-color:var(--red-light); font-weight:600; }
+        .tab-btn.active { color:var(--red-light); background:var(--tab-active-bg); border-bottom-color:var(--red-light); text-shadow:0 0 0.35px currentColor; }
         body.light .tab-btn.active { color:var(--red); border-bottom-color:var(--red); }
         .tab-badge { font-family:'DM Mono',monospace; font-size:0.57rem; padding:2px 7px; border-radius:100px; font-weight:500; letter-spacing:0.04em; }
         .badge-legal { background:rgba(153,27,27,0.25); color:#fca5a5; }
         .badge-admin { background:rgba(29,78,216,0.25);  color:#93c5fd; }
         .badge-it    { background:rgba(15,118,110,0.25); color:#5eead4; }
         .badge-hr    { background:rgba(124,58,237,0.25); color:#c4b5fd; }
+        .badge-dev   { background:var(--dev-bg); color:var(--dev-c); border:1px solid var(--dev-bdr); }
         body.light .badge-legal { background:#fee2e2; color:#991b1b; }
         body.light .badge-admin { background:#dbeafe; color:#1d4ed8; }
         body.light .badge-it    { background:#ccfbf1; color:#0f766e; }
         body.light .badge-hr    { background:#ede9fe; color:#7c3aed; }
 
-        /* CONTENT */
-        .tab-content { padding:36px; min-height:500px; background:var(--bg-2); }
-        .fade-in { animation:fadeIn 0.3s ease; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:translateY(0)} }
+        /* CONTENT — 3D card swap */
+        .tab-content { position:relative; overflow:hidden; perspective:1600px; min-height:500px; background:var(--bg-2); }
+        .tab-card {
+            display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start;
+            padding:36px; box-sizing:border-box; background:var(--bg-2);
+            backface-visibility:hidden;
+            transition: transform 0.55s cubic-bezier(0.65,0.05,0.36,1), opacity 0.4s ease;
+            transform: translateX(0) rotateY(0deg) scale(1);
+            opacity:1;
+        }
+        .tab-card.stacked { position:absolute; top:0; left:0; width:100%; }
+        .tab-card.pose-left  { transform: translateX(-90px) rotateY(28deg) scale(0.9); opacity:0; }
+        .tab-card.pose-right { transform: translateX(90px) rotateY(-28deg) scale(0.9); opacity:0; }
 
         /* META */
         .detail-meta { background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:6px 18px; }
@@ -176,6 +192,7 @@
 
         /* AUTO NOTE */
         .auto-note { background:var(--auto-bg); border-left:3px solid var(--auto-bdr); border-radius:0 9px 9px 0; padding:11px 14px; font-size:0.8rem; color:var(--auto-c); }
+        .dev-note { background:var(--dev-bg); border-left:3px solid var(--dev-bdr); border-radius:0 9px 9px 0; padding:11px 14px; font-size:0.8rem; color:var(--dev-c); }
 
         /* VIZ */
         .viz-panel { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:26px; min-height:400px; display:flex; flex-direction:column; }
@@ -217,7 +234,7 @@
         .container { max-width:1180px; margin:0 auto; }
         .z-content { position:relative; z-index:1; }
         ::-webkit-scrollbar{width:5px;height:5px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:#374151;border-radius:3px}
-        @media(max-width:900px){.tab-content{padding:22px 18px}.explorer-header{padding:20px}.two-col{grid-template-columns:1fr !important}}
+        @media(max-width:900px){.tab-card{padding:22px 18px;grid-template-columns:1fr !important}.explorer-header{padding:20px}}
     </style>
 </head>
 <body>
@@ -253,7 +270,7 @@
 <!-- HERO -->
 <section class="hero z-content">
     <div class="container">
-        <div class="hero-label">Solano Law Firm · Internal Platform</div>
+        <div class="hero-label">Solano Law Firm &middot; Internal Platform</div>
         <h1 class="hero-title">Centralized Workflow<br><span>Intelligence.</span></h1>
         <p class="hero-sub">
             Automated ticket systems integrated across Microsoft Teams, Power Automate, and SharePoint &mdash;
@@ -302,12 +319,12 @@
                 <h2>Systems Explorer</h2>
                 <p>Select a system to view its workflow, logic, and access links.</p>
             </div>
-            <div class="tab-wrap">
-                <button class="tab-scroll-btn" onclick="scrollTabs(-1)" title="Scroll left">
+            <div class="tab-nav-row">
+                <button class="nav-arrow" onclick="navigateSystem(-1)" title="Previous system" aria-label="Previous system">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
                 <div class="tab-bar" id="systemTabs"></div>
-                <button class="tab-scroll-btn" onclick="scrollTabs(1)" title="Scroll right">
+                <button class="nav-arrow" onclick="navigateSystem(1)" title="Next system" aria-label="Next system">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
@@ -341,6 +358,7 @@
                             <th style="text-align:left;">Feature Capability</th>
                             <th>Deadlines</th><th>Filings</th><th>Scheduling</th><th>Complaints</th>
                             <th>Refunds</th><th>IT Issues</th><th>Inquiries</th><th>Reimbursements</th>
+                            <th>Billing</th><th>Forms Request</th><th>Translations</th><th>Attorney Review</th>
                         </tr>
                     </thead>
                     <tbody id="matrixBody"></tbody>
@@ -389,7 +407,7 @@ function toggleTheme() {
     document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     applyLogoFilter();
     updateNetworkColors();
-    if (currentTab) switchTab(currentTab);
+    refreshCurrentVisualization();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -508,28 +526,85 @@ const systems = [
             vizType:'flow_reimbursements', vizTitle:'Reimbursement Approval Pipeline',
             vizDesc:'Employees submit requests with event details, amount, currency, and receipt. Each request flows through a 4-stage approval pipeline before payment is processed.'
         }
+    },
+    {
+        id:'billing', name:'Billing', icon:'fa-file-invoice-dollar', badge:'ADMIN', badgeClass:'badge-admin',
+        listLink:'https://slfo365.sharepoint.com/sites/SLF/Lists/Billing%20Ticket%20System/AllItems.aspx?env=WebViewList',
+        formLink:'https://slfo365.sharepoint.com/:l:/s/SLF/JAAZ_6kfzv3CRYri5Xdhm9SOAaNzkuTIhnGTD6Y4oiwt5Q4?nav=NjJkYTAwY2ItMmY2NC00ZWM5LTk0ZmItZWVjYWY3NWM5Mzlj',
+        summary:'A revamped ticket system for the Billing department. Requests route through Teams with an automatic summary sync back to the channel, anti-loop validation, and a fast acknowledgment window.',
+        details:{
+            input:'Form Submissions &middot; Teams Channel: Billing',
+            logic:'Automated Teams Summary Sync &middot; CreatedVia Anti-Loop Validation',
+            reporting:'Daily automated reports',
+            sla:'15 min acknowledge / 24 hr completion',
+            vizType:'flow_billing', vizTitle:'Billing Request Flow',
+            vizDesc:'A billing request submitted via form or Teams triggers an automatic summary post back to the channel, with a deep link connecting the ticket to its originating thread.'
+        }
+    },
+    {
+        id:'forms_request', name:'Forms Request', icon:'fa-file-circle-check', badge:'LEGAL', badgeClass:'badge-legal',
+        listLink:'https://slfo365.sharepoint.com/sites/SLF/Lists/Forms%20Request%20Tracker/AllItems.aspx?env=WebViewList',
+        formLink:'https://slfo365.sharepoint.com/:l:/s/SLF/JAAReJE1ofsES6rbobVRizHqAerEVBf3V9s9QjbMcFwF7BY?nav=MDdhNDU3MzQtZmRjNC00M2IyLWIwOTYtNTQzOTk2NGZmZjU5',
+        summary:'Tracks requests for specific case forms, supporting multiple Form Numbers per request alongside Case Type and Due Date so nothing slips past its deadline.',
+        details:{
+            input:'Form Submissions &middot; Teams Channel: Forms Request',
+            logic:'Multi-Select Form Number Tagging &middot; Dual-Shield Anti-Loop',
+            reporting:'Daily automated reports',
+            sla:'60 min acknowledge / 1 week closure',
+            vizType:'chart_bar', vizTitle:'Forms Request Status Distribution',
+            vizData:{ labels:['Pending Review','In Progress','Completed'], data:[9,4,21], colors:['#f59e0b','#3b82f6','#22c55e'], label:'Requests' },
+            vizDesc:'Each request can tag multiple form numbers at once and carries its own Due Date, giving a clear view of what still needs attorney or paralegal action.'
+        }
+    },
+    {
+        id:'translations', name:'Translations', icon:'fa-language', badge:'ADMIN', badgeClass:'badge-admin',
+        listLink:'https://slfo365.sharepoint.com/sites/SLF/Lists/Translations%20Tracker/AllItems.aspx?env=WebViewList',
+        formLink:'https://slfo365.sharepoint.com/:l:/s/SLF/JACAp2aBkWa8SbGvrc6_BmZ9AYCfZ4l5ffAlZvydwY5Iaic?nav=Njk5MmY5YWMtNzNmMy00YTFmLTkzNjUtMGM1MDFkYTNiNGNi',
+        summary:'Replicates the same automated ticket model for the translations team, routing document translation requests with full Teams sync and anti-loop protection.',
+        details:{
+            input:'Form Submissions &middot; Teams Channel: Translations',
+            logic:'Automated Teams Sync &middot; Dual-Shield Anti-Loop',
+            reporting:'Daily automated reports',
+            sla:'24 hr completion',
+            vizType:'flow_translations', vizTitle:'Translation Request Flow',
+            vizDesc:'A translation request submitted via form or Teams is tagged and synced automatically, then routed for completion within the 24-hour window.'
+        }
+    },
+    {
+        id:'attorney_review', name:'Filings for Attorney Review', icon:'fa-user-tie', badge:'LEGAL', badgeClass:'badge-legal',
+        listLink:'https://slfo365.sharepoint.com/sites/SLF/Lists/Filings%20For%20Attorney%20Review%20Ticket%20System/AllItems.aspx?env=WebViewList&npsAction=createList',
+        formLink:'https://slfo365.sharepoint.com/:l:/s/SLF/JAB8GkVgX6fOQLkwuGAVMFGaAUrS7EyQlXvbjZGI1JXIYPg?nav=MDRhNGYzOTAtYzQwMy00M2U0LWE5MGMtYTY3YjNlYzlhYjNm',
+        summary:'A dedicated ticket system that routes filings requiring attorney review before submission, using the same Teams-to-SharePoint automation pattern used across the other trackers.',
+        details:{
+            input:'Form Submissions &middot; Teams Channel: Filings For Attorney Review',
+            logic:'Flow Routing Logic &middot; Dual-Shield Anti-Loop Validation',
+            reporting:'Daily automated reports',
+            sla:'60 min acknowledge / 48 hr completion',
+            vizType:'flow_attorney_review', vizTitle:'Attorney Review Routing Flow',
+            vizDesc:'A filing submitted for review is routed automatically based on flow logic, then assigned to the correct attorney with a deep link back to its originating Teams thread.'
+        }
     }
 ];
 
 const matrixData = [
-    {feature:'Teams \u2192 SharePoint Sync',   cat:'sync',        d:1,f:1,s:1,c:1,r:1,h:1,i:1,rb:0},
-    {feature:'Auto-Attachments',               cat:'attachments', d:1,f:1,s:0,c:1,r:1,h:0,i:1,rb:0},
-    {feature:'"Back to Teams" Deep Link',      cat:'sync',        d:1,f:1,s:1,c:1,r:1,h:1,i:1,rb:0},
-    {feature:'Calendar View',                  cat:'calendar',    d:1,f:1,s:1,c:0,r:0,h:0,i:0,rb:0},
-    {feature:'Financial Sum Logic ($)',        cat:'financial',   d:0,f:0,s:0,c:0,r:1,h:0,i:0,rb:0},
-    {feature:'Production Credit Tracking',    cat:'financial',   d:0,f:1,s:0,c:0,r:0,h:0,i:0,rb:0},
-    {feature:'Priority Segmentation',         cat:'priority',    d:1,f:1,s:0,c:1,r:0,h:1,i:1,rb:0},
-    {feature:'Smart Text Parsing',            cat:'parsing',     d:0,f:0,s:0,c:0,r:0,h:1,i:0,rb:0},
-    {feature:'Anti-Loop Validation',          cat:'antiloop',    d:1,f:1,s:1,c:1,r:1,h:1,i:1,rb:0},
-    {feature:'SLA Metrics (Ack + Close)',     cat:'sla',         d:1,f:1,s:1,c:1,r:1,h:0,i:1,rb:0},
-    {feature:'Daily Automated Reports',       cat:'reports',     d:1,f:1,s:1,c:1,r:1,h:0,i:1,rb:0},
-    {feature:'Weekly Automated Reports',      cat:'reports',     d:1,f:1,s:1,c:1,r:1,h:0,i:0,rb:0},
-    {feature:'Approval Workflow Pipeline',    cat:'sla',         d:0,f:0,s:0,c:0,r:0,h:0,i:0,rb:1}
+    {feature:'Teams \u2192 SharePoint Sync',   cat:'sync',        d:1,f:1,s:1,c:1,r:1,h:1,i:1,rb:0, bl:1,fr:1,tr:1,ar:1},
+    {feature:'Auto-Attachments',               cat:'attachments', d:1,f:1,s:0,c:1,r:1,h:0,i:1,rb:0, bl:1,fr:1,tr:1,ar:1},
+    {feature:'"Back to Teams" Deep Link',      cat:'sync',        d:1,f:1,s:1,c:1,r:1,h:1,i:1,rb:0, bl:1,fr:1,tr:1,ar:1},
+    {feature:'Calendar View',                  cat:'calendar',    d:1,f:1,s:1,c:0,r:0,h:0,i:0,rb:0, bl:0,fr:0,tr:0,ar:0},
+    {feature:'Financial Sum Logic ($)',        cat:'financial',   d:0,f:0,s:0,c:0,r:1,h:0,i:0,rb:0, bl:0,fr:0,tr:0,ar:0},
+    {feature:'Production Credit Tracking',    cat:'financial',   d:0,f:1,s:0,c:0,r:0,h:0,i:0,rb:0, bl:0,fr:0,tr:0,ar:0},
+    {feature:'Priority Segmentation',         cat:'priority',    d:1,f:1,s:0,c:1,r:0,h:1,i:1,rb:0, bl:0,fr:0,tr:0,ar:1},
+    {feature:'Smart Text Parsing',            cat:'parsing',     d:0,f:0,s:0,c:0,r:0,h:1,i:0,rb:0, bl:0,fr:0,tr:0,ar:0},
+    {feature:'Anti-Loop Validation',          cat:'antiloop',    d:1,f:1,s:1,c:1,r:1,h:1,i:1,rb:0, bl:1,fr:1,tr:1,ar:1},
+    {feature:'SLA Metrics (Ack + Close)',     cat:'sla',         d:1,f:1,s:1,c:1,r:1,h:0,i:1,rb:0, bl:1,fr:1,tr:1,ar:1},
+    {feature:'Daily Automated Reports',       cat:'reports',     d:1,f:1,s:1,c:1,r:1,h:0,i:1,rb:0, bl:1,fr:1,tr:1,ar:1},
+    {feature:'Weekly Automated Reports',      cat:'reports',     d:1,f:1,s:1,c:1,r:1,h:0,i:0,rb:0, bl:0,fr:0,tr:0,ar:0},
+    {feature:'Approval Workflow Pipeline',    cat:'sla',         d:0,f:0,s:0,c:0,r:0,h:0,i:0,rb:1, bl:0,fr:0,tr:0,ar:0}
 ];
 
 // ═══════════════════════════════════════════════════════════
-let currentTab = 'deadlines';
-let activeChart = null;
+let currentTab = null;
+let pendingRemoveTimer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Apply time-based theme on load
@@ -544,83 +619,157 @@ document.addEventListener('DOMContentLoaded', () => {
     init3DBackground();
 });
 
-function scrollTabs(dir) {
-    document.getElementById('systemTabs').scrollBy({left: dir * 220, behavior:'smooth'});
-}
-
 // ─── TABS ───────────────────────────────────────────────────
 function renderTabs() {
     document.getElementById('systemTabs').innerHTML = systems.map(s => `
         <button onclick="switchTab('${s.id}')" id="tab-${s.id}" class="tab-btn">
             <i class="fa-solid ${s.icon}"></i>${s.name}
             <span class="tab-badge ${s.badgeClass}">${s.badge}</span>
+            ${s.devBadge ? '<span class="tab-badge badge-dev">SOON</span>' : ''}
         </button>`).join('');
+}
+
+function navigateSystem(dir) {
+    const ids = systems.map(s => s.id);
+    let idx = ids.indexOf(currentTab);
+    if (idx === -1) idx = 0;
+    idx = (idx + dir + ids.length) % ids.length;
+    switchTab(ids[idx]);
+}
+
+function refreshCurrentVisualization() {
+    if (!currentTab) return;
+    const sys = systems.find(s => s.id === currentTab);
+    const card = document.querySelector('.tab-card');
+    if (sys && card) renderVisualization(sys, card);
+}
+
+function buildCardHTML(sys) {
+    const showListBtn = sys.listLink
+        ? `<a href="${sys.listLink}" target="_blank" class="btn-primary"><i class="fa-solid fa-list-check"></i> Open Tracker List</a>`
+        : '';
+    return `
+        <div style="display:flex;flex-direction:column;gap:18px;">
+            <div>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <div style="width:42px;height:42px;border-radius:11px;background:var(--meta-icon-bg);display:flex;align-items:center;justify-content:center;color:var(--meta-icon-c);font-size:1.05rem;">
+                        <i class="fa-solid ${sys.icon}"></i>
+                    </div>
+                    <div>
+                        <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;margin:0;color:var(--t1);">${sys.name} Tracker</h3>
+                        <span class="tab-badge ${sys.badgeClass}" style="margin-top:4px;display:inline-block;">${sys.badge}</span>
+                        ${sys.devBadge ? '<span class="tab-badge badge-dev" style="margin-top:4px;margin-left:4px;display:inline-block;">IN DEVELOPMENT</span>' : ''}
+                    </div>
+                </div>
+                <p style="font-size:0.9rem;color:var(--t2);line-height:1.72;margin:0;">${sys.summary}</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                ${showListBtn}
+                <a href="${sys.formLink}" target="_blank" class="btn-outline">
+                    <i class="fa-solid fa-plus"></i> New Ticket Form
+                </a>
+            </div>
+            ${sys.hasTeamsChannel === false ? '' : `
+            <div class="auto-note">
+                <i class="fa-brands fa-microsoft"></i>
+                <strong> Automation:</strong> Tickets are created automatically from Teams channel posts. The form is also pinned in the channel for manual submission.
+            </div>`}
+            ${sys.devBadge ? `
+            <div class="dev-note">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <strong> In Development:</strong> This system is currently being configured and is not yet live. The list and form links are included for setup reference.
+            </div>` : ''}
+            <div class="detail-meta">
+                <div class="meta-row">
+                    <div class="meta-icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></div>
+                    <div><div class="meta-label">Input Source</div><div class="meta-value">${sys.details.input}</div></div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <div><div class="meta-label">Core Logic</div><div class="meta-value">${sys.details.logic}</div></div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div><div class="meta-label">Reporting</div><div class="meta-value">${sys.details.reporting}</div></div>
+                </div>
+                <div class="meta-row">
+                    <div class="meta-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                    <div><div class="meta-label">SLA / Workflow</div>
+                    <div class="meta-value"><span class="sla-tag"><i class="fa-solid fa-clock"></i>${sys.details.sla}</span></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="viz-panel">
+            <div class="viz-title">${sys.details.vizTitle}</div>
+            <div class="viz-container" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;"></div>
+            <div class="viz-note"><i class="fa-solid fa-circle-info" style="color:var(--red-light);margin-right:7px;"></i>${sys.details.vizDesc}</div>
+        </div>
+    `;
 }
 
 function switchTab(id) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-'+id)?.classList.add('active');
-    currentTab = id;
+
     const sys = systems.find(s => s.id === id);
-    if (!sys) return;
+    if (!sys || id === currentTab) return;
 
-    const showListBtn = sys.listLink
-        ? `<a href="${sys.listLink}" target="_blank" class="btn-primary"><i class="fa-solid fa-list-check"></i> Open Tracker List</a>`
-        : '';
+    const container = document.getElementById('tabContent');
 
-    document.getElementById('tabContent').innerHTML = `
-        <div class="fade-in two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;">
-            <div style="display:flex;flex-direction:column;gap:18px;">
-                <div>
-                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
-                        <div style="width:42px;height:42px;border-radius:11px;background:var(--meta-icon-bg);display:flex;align-items:center;justify-content:center;color:var(--meta-icon-c);font-size:1.05rem;">
-                            <i class="fa-solid ${sys.icon}"></i>
-                        </div>
-                        <div>
-                            <h3 style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;margin:0;color:var(--t1);">${sys.name} Tracker</h3>
-                            <span class="tab-badge ${sys.badgeClass}" style="margin-top:4px;display:inline-block;">${sys.badge}</span>
-                        </div>
-                    </div>
-                    <p style="font-size:0.9rem;color:var(--t2);line-height:1.72;margin:0;">${sys.summary}</p>
-                </div>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    ${showListBtn}
-                    <a href="${sys.formLink}" target="_blank" class="btn-outline">
-                        <i class="fa-solid fa-plus"></i> New Ticket Form
-                    </a>
-                </div>
-                ${sys.hasTeamsChannel === false ? '' : `
-                <div class="auto-note">
-                    <i class="fa-brands fa-microsoft"></i>
-                    <strong> Automation:</strong> Tickets are created automatically from Teams channel posts. The form is also pinned in the channel for manual submission.
-                </div>`}
-                <div class="detail-meta">
-                    <div class="meta-row">
-                        <div class="meta-icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></div>
-                        <div><div class="meta-label">Input Source</div><div class="meta-value">${sys.details.input}</div></div>
-                    </div>
-                    <div class="meta-row">
-                        <div class="meta-icon"><i class="fa-solid fa-microchip"></i></div>
-                        <div><div class="meta-label">Core Logic</div><div class="meta-value">${sys.details.logic}</div></div>
-                    </div>
-                    <div class="meta-row">
-                        <div class="meta-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <div><div class="meta-label">Reporting</div><div class="meta-value">${sys.details.reporting}</div></div>
-                    </div>
-                    <div class="meta-row">
-                        <div class="meta-icon"><i class="fa-solid fa-gauge-high"></i></div>
-                        <div><div class="meta-label">SLA / Workflow</div>
-                        <div class="meta-value"><span class="sla-tag"><i class="fa-solid fa-clock"></i>${sys.details.sla}</span></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="viz-panel">
-                <div class="viz-title">${sys.details.vizTitle}</div>
-                <div id="vizContainer" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;"></div>
-                <div class="viz-note"><i class="fa-solid fa-circle-info" style="color:var(--red-light);margin-right:7px;"></i>${sys.details.vizDesc}</div>
-            </div>
-        </div>`;
-    renderVisualization(sys);
+    // If a previous transition is still finishing, finalize it immediately
+    if (pendingRemoveTimer) {
+        clearTimeout(pendingRemoveTimer);
+        pendingRemoveTimer = null;
+        const stale = container.querySelectorAll('.tab-card');
+        stale.forEach((el, i) => { if (i < stale.length - 1) { el._chart?.destroy(); el.remove(); } });
+    }
+
+    const ids = systems.map(s => s.id);
+    const oldIdx = ids.indexOf(currentTab);
+    const newIdx = ids.indexOf(id);
+    const dir = (oldIdx === -1) ? 1 : (newIdx > oldIdx ? 1 : -1);
+
+    const oldCard = container.querySelector('.tab-card');
+    const newCard = document.createElement('div');
+    newCard.className = 'tab-card';
+    newCard.innerHTML = buildCardHTML(sys);
+
+    if (oldCard) {
+        const oldH = container.getBoundingClientRect().height;
+        container.style.height = oldH + 'px';
+
+        oldCard.classList.add('stacked');
+        newCard.classList.add('stacked', dir === 1 ? 'pose-right' : 'pose-left');
+        container.appendChild(newCard);
+        renderVisualization(sys, newCard);
+
+        const newH = newCard.scrollHeight;
+        void newCard.offsetWidth; // force reflow so the entry pose is registered before animating
+
+        requestAnimationFrame(() => {
+            container.style.transition = 'height 0.55s cubic-bezier(0.65,0.05,0.36,1)';
+            container.style.height = Math.max(newH, 460) + 'px';
+            newCard.classList.remove('pose-right', 'pose-left');
+            oldCard.classList.add(dir === 1 ? 'pose-left' : 'pose-right');
+        });
+
+        pendingRemoveTimer = setTimeout(() => {
+            oldCard._chart?.destroy();
+            oldCard.remove();
+            newCard.classList.remove('stacked');
+            container.style.height = '';
+            container.style.transition = '';
+            pendingRemoveTimer = null;
+        }, 600);
+    } else {
+        newCard.classList.add('pose-right');
+        container.appendChild(newCard);
+        renderVisualization(sys, newCard);
+        void newCard.offsetWidth;
+        requestAnimationFrame(() => newCard.classList.remove('pose-right'));
+    }
+
+    currentTab = id;
 }
 
 // ─── VISUALIZATIONS ─────────────────────────────────────────
@@ -628,35 +777,38 @@ function getChartColors() {
     return { grid: isDark ? '#1f2937' : '#f3f4f6', tick: isDark ? '#4b5563' : '#6b7280' };
 }
 
-function renderVisualization(sys) {
-    const c = document.getElementById('vizContainer');
-    if (activeChart) { activeChart.destroy(); activeChart = null; }
+function renderVisualization(sys, cardEl) {
+    const c = cardEl.querySelector('.viz-container');
+    if (!c) return;
+    if (cardEl._chart) { cardEl._chart.destroy(); cardEl._chart = null; }
     const vt = sys.details.vizType;
     const cc = getChartColors();
+    let chart = null;
 
     if (vt === 'chart_bar') {
-        c.innerHTML = `<div style="position:relative;width:100%;flex:1;min-height:240px;"><canvas id="dynChart"></canvas></div>`;
-        const ctx = document.getElementById('dynChart').getContext('2d');
-        activeChart = new Chart(ctx, { type:'bar',
-            data:{ labels:['Pending Review','In Progress','Completed/Filed'],
-                datasets:[{label:'Tickets',data:[14,6,52],backgroundColor:['#f59e0b','#3b82f6','#22c55e'],borderRadius:6,borderSkipped:false}]},
+        c.innerHTML = `<div style="position:relative;width:100%;flex:1;min-height:240px;"><canvas class="dyn-chart"></canvas></div>`;
+        const ctx = c.querySelector('.dyn-chart').getContext('2d');
+        const vd = sys.details.vizData || { labels:['Pending Review','In Progress','Completed/Filed'], data:[14,6,52], colors:['#f59e0b','#3b82f6','#22c55e'], label:'Tickets' };
+        chart = new Chart(ctx, { type:'bar',
+            data:{ labels:vd.labels,
+                datasets:[{label:vd.label,data:vd.data,backgroundColor:vd.colors,borderRadius:6,borderSkipped:false}]},
             options:{ responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
                 scales:{y:{beginAtZero:true,grid:{color:cc.grid},ticks:{color:cc.tick}},x:{grid:{display:false},ticks:{color:cc.tick}}}}});
     }
     else if (vt === 'chart_financial') {
-        c.innerHTML = `<div style="position:relative;width:100%;flex:1;min-height:240px;"><canvas id="dynChart"></canvas></div>`;
-        const ctx = document.getElementById('dynChart').getContext('2d');
-        activeChart = new Chart(ctx, { type:'bar',
+        c.innerHTML = `<div style="position:relative;width:100%;flex:1;min-height:240px;"><canvas class="dyn-chart"></canvas></div>`;
+        const ctx = c.querySelector('.dyn-chart').getContext('2d');
+        chart = new Chart(ctx, { type:'bar',
             data:{ labels:['Agent A','Agent B','Agent C'],
                 datasets:[{label:'Total Refunded ($)',data:[1850,940,2200],backgroundColor:'#22c55e',borderRadius:6,borderSkipped:false}]},
             options:{ responsive:true,maintainAspectRatio:false,
-                plugins:{tooltip:{callbacks:{label:c=>'$'+c.parsed.y.toLocaleString()}}},
+                plugins:{tooltip:{callbacks:{label:ctx=>'$'+ctx.parsed.y.toLocaleString()}}},
                 scales:{y:{beginAtZero:true,grid:{color:cc.grid},ticks:{color:cc.tick,callback:v=>'$'+v}},x:{grid:{display:false},ticks:{color:cc.tick}}}}});
     }
     else if (vt === 'chart_doughnut') {
-        c.innerHTML = `<div style="position:relative;width:100%;max-width:280px;height:240px;margin:auto;"><canvas id="dynChart"></canvas></div>`;
-        const ctx = document.getElementById('dynChart').getContext('2d');
-        activeChart = new Chart(ctx, { type:'doughnut',
+        c.innerHTML = `<div style="position:relative;width:100%;max-width:280px;height:240px;margin:auto;"><canvas class="dyn-chart"></canvas></div>`;
+        const ctx = c.querySelector('.dyn-chart').getContext('2d');
+        chart = new Chart(ctx, { type:'doughnut',
             data:{ labels:['Communication','Billing','Case Delay','Staff Conduct','Other'],
                 datasets:[{data:[35,25,20,12,8],backgroundColor:['#3b82f6','#ef4444','#f59e0b','#8b5cf6','#374151'],borderWidth:0}]},
             options:{ responsive:true,maintainAspectRatio:false,cutout:'65%',
@@ -720,6 +872,35 @@ function renderVisualization(sys) {
                 </div>
             </div>`).join('') + `</div>`;
     }
+    else if (vt === 'flow_billing') {
+        c.innerHTML = flowHTML([
+            {icon:'fa-brands fa-microsoft',color:'#93c5fd',bg:'rgba(59,130,246,0.15)',label:'Billing Request Submitted',sub:'Via form or Teams channel post'},
+            {icon:'fa-bolt',color:'#fbbf24',bg:'rgba(217,119,6,0.15)',label:'Power Automate Sync',sub:'Posts summary back to Teams + anti-loop check',pulse:true},
+            {icon:'fa-file-invoice-dollar',color:'#4ade80',bg:'rgba(34,197,94,0.15)',label:'Ticket Tracked',sub:'15 min acknowledgment timer starts'}]);
+    }
+    else if (vt === 'flow_translations') {
+        c.innerHTML = flowHTML([
+            {icon:'fa-brands fa-microsoft',color:'#93c5fd',bg:'rgba(59,130,246,0.15)',label:'Translation Request Submitted',sub:'Via form or Teams channel post'},
+            {icon:'fa-bolt',color:'#fbbf24',bg:'rgba(217,119,6,0.15)',label:'Power Automate Sync',sub:'Automated tag + attachment upload to bot post',pulse:true},
+            {icon:'fa-language',color:'#4ade80',bg:'rgba(34,197,94,0.15)',label:'Ticket Routed',sub:'Assigned for completion within 24 hours'}]);
+    }
+    else if (vt === 'flow_attorney_review') {
+        c.innerHTML = flowHTML([
+            {icon:'fa-file-signature',color:'#f87171',bg:'rgba(153,27,27,0.18)',label:'Filing Submitted for Review',sub:'Via form or Teams channel post'},
+            {icon:'fa-route',color:'#fbbf24',bg:'rgba(217,119,6,0.15)',label:'Power Automate Routing',sub:'Flow logic routes by case + anti-loop check',pulse:true},
+            {icon:'fa-user-tie',color:'#4ade80',bg:'rgba(34,197,94,0.15)',label:'Routed to Attorney',sub:'Ticket tracked with 48 hr completion window'}]);
+    }
+    else if (vt === 'flow_pending_setup') {
+        const banner = `<div style="width:100%;max-width:320px;display:flex;align-items:center;gap:8px;background:var(--dev-bg);border:1px solid var(--dev-bdr);border-radius:9px;padding:10px 14px;margin-bottom:14px;font-size:0.76rem;color:var(--dev-c);">
+            <i class="fa-solid fa-triangle-exclamation"></i><span>Setup in progress &mdash; not yet active</span>
+        </div>`;
+        c.innerHTML = banner + flowHTML([
+            {icon:'fa-list-check',color:'#9ca3af',bg:'rgba(156,163,175,0.15)',label:'SharePoint List Setup',sub:'Pending'},
+            {icon:'fa-route',color:'#9ca3af',bg:'rgba(156,163,175,0.15)',label:'Routing Logic & Form Config',sub:'Pending'},
+            {icon:'fa-brands fa-microsoft',color:'#9ca3af',bg:'rgba(156,163,175,0.15)',label:'Teams Sync & Go-Live',sub:'Pending'}]);
+    }
+
+    cardEl._chart = chart;
 }
 
 function flowHTML(steps) {
@@ -744,7 +925,7 @@ function renderMatrix() {
     document.getElementById('matrixBody').innerHTML = matrixData.map(row=>`
         <tr>
             <td>${row.feature}</td>
-            ${['d','f','s','c','r','h','i','rb'].map(k=>
+            ${['d','f','s','c','r','h','i','rb','bl','fr','tr','ar'].map(k=>
                 `<td>${row[k]?'<i class="fa-solid fa-circle-check check-yes"></i>':'<span class="check-no">&bull;</span>'}</td>`
             ).join('')}
         </tr>`).join('');
